@@ -2,7 +2,7 @@
 <html lang="uk">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>ПДВ: Економічна Сутність | Igor Prais 2026</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
@@ -11,155 +11,126 @@
             --blue: #2B59FF;
             --lime: #DFFF00;
             --bg: #020202;
-            --glass: rgba(255, 255, 255, 0.03);
-            --border: rgba(255, 255, 255, 0.08);
+            --glass: rgba(255, 255, 255, 0.05);
+            --border: rgba(255, 255, 255, 0.1);
         }
 
-        html { scroll-behavior: smooth; }
+        html { scroll-behavior: smooth; overflow-x: hidden; }
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
-        body { background: var(--bg); color: #fff; overflow-x: hidden; text-align: center; }
+        body { background: var(--bg); color: #fff; overflow-x: hidden; text-align: center; line-height: 1.5; }
 
-        /* Фонова 3D сітка */
+        /* Оптимізована фонова сітка */
         .grid-3d {
-            position: fixed; width: 200%; height: 200%; top: -50%; left: -50%;
+            position: fixed; width: 200vw; height: 200vh; top: -50%; left: -50%;
             background-image: linear-gradient(var(--blue) 1px, transparent 1px), linear-gradient(90deg, var(--blue) 1px, transparent 1px);
-            background-size: 80px 80px; opacity: 0.04;
-            transform: rotateX(45deg) translateZ(-200px);
-            z-index: 0; animation: grid-move 20s linear infinite;
+            background-size: 100px 100px; opacity: 0.05;
+            transform: rotateX(60deg); z-index: 0; pointer-events: none;
         }
-        @keyframes grid-move { from { transform: rotateX(45deg) translateY(0); } to { transform: rotateX(45deg) translateY(80px); } }
 
-        /* Падаючі зірки */
-        .particles { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; }
-        .star {
-            position: absolute; border-radius: 50%;
-            animation: star-fall var(--d) linear infinite;
-            filter: blur(1px);
-            will-change: transform, opacity;
-            box-shadow: 0 0 10px var(--c);
+        /* Економні зірки на CSS (без JS) */
+        .stars-container { position: fixed; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
+        .stars-container::after {
+            content: ""; position: absolute; top: -100%; left: 0; width: 100%; height: 200%;
+            background-image: radial-gradient(2px 2px at 20px 30px, #fff, rgba(0,0,0,0)),
+                              radial-gradient(2px 2px at 40px 70px, var(--blue), rgba(0,0,0,0)),
+                              radial-gradient(2px 2px at 50px 160px, var(--lime), rgba(0,0,0,0));
+            background-size: 300px 300px;
+            animation: stars-move 10s linear infinite;
         }
-        @keyframes star-fall {
-            0% { transform: translateY(-10vh) scale(0); opacity: 0; }
-            15% { opacity: 0.8; transform: translateY(10vh) scale(1.2); }
-            100% { transform: translateY(110vh) scale(0.3); opacity: 0; }
-        }
+        @keyframes stars-move { from { transform: translateY(0); } to { transform: translateY(300px); } }
 
         /* Навігація */
         nav {
-            position: fixed; top: 25px; left: 50%; transform: translateX(-50%);
-            background: rgba(10, 10, 10, 0.8); border: 1px solid var(--border);
-            backdrop-filter: blur(15px); padding: 8px 12px; border-radius: 100px;
-            z-index: 1000; display: flex; gap: 5px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            width: max-content; max-width: 90vw; overflow-x: auto;
+            position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
+            background: rgba(10, 10, 10, 0.85); border: 1px solid var(--border);
+            backdrop-filter: blur(15px); padding: 6px; border-radius: 100px;
+            z-index: 1000; display: flex; gap: 2px; width: auto; max-width: 95vw; overflow-x: auto;
         }
         nav::-webkit-scrollbar { display: none; }
         nav a { 
-            color: #fff; text-decoration: none; font-size: 10px; font-weight: 800; 
+            color: #fff; text-decoration: none; font-size: clamp(9px, 2.5vw, 11px); font-weight: 800; 
             text-transform: uppercase; padding: 10px 15px; border-radius: 100px;
-            transition: 0.3s; opacity: 0.5; letter-spacing: 1px; white-space: nowrap;
+            transition: 0.3s; opacity: 0.4; white-space: nowrap;
         }
-        nav a.active { 
-            background: var(--blue); opacity: 1; color: #fff; 
-            box-shadow: 0 0 15px rgba(43, 89, 255, 0.4);
-        }
+        nav a.active { background: var(--blue); opacity: 1; box-shadow: 0 0 15px rgba(43, 89, 255, 0.4); }
 
-        section { min-height: 100vh; padding: 140px 5% 80px; display: flex; align-items: center; justify-content: center; position: relative; z-index: 2; }
+        section { min-height: 100vh; padding: 120px 20px 80px; display: flex; align-items: center; justify-content: center; position: relative; z-index: 2; }
         .content-box { width: 100%; max-width: 1100px; margin: 0 auto; }
 
-        h1 { font-size: clamp(2.2rem, 7vw, 5.5rem); font-weight: 900; line-height: 0.9; text-transform: uppercase; margin-bottom: 30px; text-align: left; color: #fff; }
-        
+        h1 { font-size: clamp(2.2rem, 8vw, 5.5rem); font-weight: 900; line-height: 1; text-transform: uppercase; margin-bottom: 30px; text-align: center; }
         .accent-row {
             background: linear-gradient(90deg, var(--blue), #8099ff, var(--blue));
-            background-size: 200% auto;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent;
             animation: flow 3s linear infinite;
         }
         @keyframes flow { to { background-position: 200% center; } }
 
-        .tagline {
-            color: #fff; font-weight: 700; letter-spacing: 5px; display: block; 
-            text-align: left; margin-bottom: 10px; opacity: 0.5; font-size: clamp(10px, 2vw, 14px);
-        }
+        .tagline { color: var(--blue); font-weight: 700; letter-spacing: 4px; display: block; margin-bottom: 10px; font-size: 12px; }
+        h2 { font-size: clamp(1.8rem, 6vw, 3.5rem); font-weight: 900; margin-bottom: 40px; text-transform: uppercase; color: var(--lime); }
 
-        h2 { font-size: clamp(1.8rem, 5vw, 3.5rem); font-weight: 900; margin-bottom: 40px; text-transform: uppercase; color: var(--lime); display: inline-block; }
-
-        .bento { display: grid; grid-template-columns: repeat(12, 1fr); gap: 20px; }
+        .bento { display: grid; grid-template-columns: repeat(12, 1fr); gap: 15px; }
         .card {
             grid-column: span 12; background: var(--glass); border: 1px solid var(--border);
-            padding: clamp(20px, 5vw, 40px); border-radius: 35px; backdrop-filter: blur(12px);
-            transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            width: 100%; text-align: left; position: relative; overflow: hidden;
+            padding: 30px; border-radius: 30px; backdrop-filter: blur(10px);
+            text-align: center; transition: 0.3s;
         }
-        .card:hover { border-color: var(--blue); transform: translateY(-8px); box-shadow: 0 20px 40px rgba(43, 89, 255, 0.15); }
 
-        .span-8 { grid-column: span 8; }
-        .span-4 { grid-column: span 4; }
-        .span-6 { grid-column: span 6; }
+        /* Десктоп - повертаємо вирівнювання ліворуч */
+        @media (min-width: 1024px) {
+            h1, .tagline, .intro-p { text-align: left; }
+            .card { text-align: left; }
+            .span-8 { grid-column: span 8; }
+            .span-4 { grid-column: span 4; }
+            .span-6 { grid-column: span 6; }
+            .card:hover { border-color: var(--blue); transform: translateY(-5px); }
+        }
 
         .start-btn {
-            display: inline-flex; align-items: center; gap: 15px;
-            background: var(--lime); color: #000; padding: 18px 40px;
+            display: inline-flex; background: var(--lime); color: #000; padding: 18px 40px;
             border-radius: 100px; font-weight: 900; text-decoration: none;
-            text-transform: uppercase; margin-top: 30px; transition: 0.3s;
+            text-transform: uppercase; margin-top: 20px; transition: 0.3s;
         }
-        .start-btn:hover { transform: scale(1.05); box-shadow: 0 0 30px rgba(223, 255, 0, 0.3); }
 
-        .percent-loader {
-            width: clamp(140px, 20vw, 180px); height: clamp(140px, 20vw, 180px); position: relative;
-            display: flex; align-items: center; justify-content: center; margin: 0 auto;
-        }
+        .percent-loader { width: 150px; height: 150px; position: relative; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; }
         .circle-svg { width: 100%; height: 100%; transform: rotate(-90deg); }
-        .circle-svg circle { fill: none; stroke-width: 10; stroke-linecap: round; }
-        .circle-bg { stroke: rgba(255,255,255,0.03); }
         .circle-progress { 
             stroke: var(--lime); stroke-dasharray: 565; stroke-dashoffset: 565;
-            animation: progress-load 2s ease-out forwards;
-            filter: drop-shadow(0 0 5px rgba(223, 255, 0, 0.2));
+            animation: progress-load 2s ease-out forwards; fill: none; stroke-width: 12; stroke-linecap: round;
         }
         @keyframes progress-load { to { stroke-dashoffset: 339; } }
-        .percent-text { position: absolute; font-size: clamp(2rem, 5vw, 3rem); font-weight: 900; color: #fff; }
+        .percent-text { position: absolute; font-size: 2.5rem; font-weight: 900; }
 
-        p { font-size: clamp(1rem, 2vw, 1.15rem); line-height: 1.7; opacity: 0.8; margin-bottom: 10px; }
+        p { font-size: clamp(1rem, 2.5vw, 1.15rem); opacity: 0.8; margin-bottom: 10px; }
         strong { color: var(--lime); }
-        .intro-p { font-size: clamp(1.1rem, 3vw, 1.4rem); border-left: 4px solid var(--blue); padding-left: 25px; text-align: left; max-width: 950px; }
+        .intro-p { font-size: clamp(1.2rem, 3vw, 1.4rem); border-top: 3px solid var(--blue); padding-top: 20px; max-width: 950px; margin-bottom: 20px; }
+        
+        @media (min-width: 1024px) { .intro-p { border-top: none; border-left: 4px solid var(--blue); padding-top: 0; padding-left: 25px; } }
 
-        footer { padding: 40px; opacity: 0.3; font-size: 9px; letter-spacing: 3px; text-transform: uppercase; }
-
-        /* Mobile Adaptation */
-        @media (max-width: 1024px) { 
-            .span-8, .span-4, .span-6 { grid-column: span 12; } 
-            h1 { text-align: center; }
-            .tagline { text-align: center; }
-            .intro-p { border-left: none; border-top: 2px solid var(--blue); padding: 20px 0; text-align: center; }
-            .start-btn { width: 100%; justify-content: center; }
-        }
+        footer { padding: 40px; opacity: 0.3; font-size: 10px; letter-spacing: 2px; }
     </style>
 </head>
 <body>
 
     <div class="grid-3d"></div>
-    <div class="particles" id="star-container"></div>
+    <div class="stars-container"></div>
 
     <nav>
         <a href="#hero" class="nav-link active">Вступ</a>
-        <a href="#definition" class="nav-link">Що таке ПДВ?</a>
-        <a href="#effect" class="nav-link">Ефект</a>
-        <a href="#fiscal" class="nav-link">Фіскальність</a>
-        <a href="#conclusion" class="nav-link">Висновок</a>
+        <a href="#definition">Що таке ПДВ?</a>
+        <a href="#effect">Ефект</a>
+        <a href="#fiscal">Роль</a>
+        <a href="#conclusion">Кінець</a>
     </nav>
 
     <section id="hero">
-        <div class="content-box" data-aos="fade-right">
+        <div class="content-box" data-aos="fade-up">
             <span class="tagline">PRESENTATION 2026</span>
             <h1>ПДВ: Економічна сутність <br><span class="accent-row">та роль у державі</span></h1>
             <div class="intro-p">
                 Сьогодні ми проаналізуємо один із найважливіших податків сучасності — <strong>податок на додану вартість (ПДВ)</strong>.
             </div>
-            <div style="text-align: left; margin-top: 20px;">
-                <p style="max-width: 800px; opacity: 0.6;">У професійному середовищі його часто називають «універсальним акцизом». За ним стоїть геніальна економічна модель.</p>
-                <a href="#definition" class="start-btn">Дослідити ↓</a>
-            </div>
+            <p style="opacity: 0.6;">У професійному середовищі його часто називають «універсальним акцизом». За ним стоїть геніальна економічна модель.</p>
+            <a href="#definition" class="start-btn">Дослідити ↓</a>
         </div>
     </section>
 
@@ -167,13 +138,13 @@
         <div class="content-box">
             <h2 data-aos="fade-up">Що таке ПДВ?</h2>
             <div class="bento">
-                <div class="card span-8" data-aos="fade-right">
+                <div class="card span-8" data-aos="fade-up">
                     <p><strong>ПДВ</strong> — це непрямий податок, який входить у ціну товарів та послуг. Його сутність полягає в тому, що держава забирає частину вартості, яка створюється на кожному етапі виробництва та реалізації товару.</p>
                 </div>
-                <div class="card span-4" data-aos="fade-left">
+                <div class="card span-4" data-aos="fade-up">
                     <p>Чому ми називаємо його <strong>«універсальним акцизом»?</strong> Акцизи зазвичай накладаються на специфічні товари, а ПДВ охоплює майже всі товари та послуги.</p>
                 </div>
-                <div class="card span-12" data-aos="fade-up" style="border-left: 4px solid var(--blue);">
+                <div class="card span-12" data-aos="fade-up" style="border-top: 3px solid var(--blue);">
                     <p>Важливо розуміти розподіл ролей: покупці є фактичними платниками, а підприємства — лише <strong>податковими агентами</strong>, які акумулюють ці кошти для держави.</p>
                 </div>
             </div>
@@ -187,10 +158,10 @@
                 <div class="card span-12" data-aos="fade-up">
                     <p>Ключове слово тут — <strong>«додана вартість»</strong>. Уявіть ланцюжок: лісгосп продає деревину меблевій фабриці, фабрика робить стіл, а магазин продає цей стіл покупцю. На кожному етапі ціна зростає.</p>
                 </div>
-                <div class="card span-6" data-aos="fade-right">
+                <div class="card span-6" data-aos="fade-up">
                     <p>Держбюджет отримує податок лише з тієї різниці, яку <strong>«додав»</strong> конкретний підприємець до вартості сировини. Це реалізується через механізм «податкового зобов’язання» та «податкового кредиту».</p>
                 </div>
-                <div class="card span-6" data-aos="fade-left">
+                <div class="card span-6" data-aos="fade-up">
                     <p>Такий підхід робить ПДВ стійким до ухилення, адже кожен учасник зацікавлений у документах. Це стимулює бізнес <strong>виходити з «тіні»</strong>.</p>
                 </div>
             </div>
@@ -201,16 +172,16 @@
         <div class="content-box">
             <h2 data-aos="fade-up">Фіскальне значення</h2>
             <div class="bento">
-                <div class="card span-4" style="display: flex; align-items: center;" data-aos="flip-left">
+                <div class="card span-4" data-aos="zoom-in">
                     <div class="percent-loader">
                         <svg class="circle-svg">
-                            <circle class="circle-bg" cx="90" cy="90" r="80"></circle>
-                            <circle class="circle-progress" cx="90" cy="90" r="80" style="stroke-dashoffset: 339;"></circle>
+                            <circle cx="75" cy="75" r="70" style="stroke:rgba(255,255,255,0.05); stroke-width:12; fill:none;"></circle>
+                            <circle class="circle-progress" cx="75" cy="75" r="70"></circle>
                         </svg>
                         <div class="percent-text">40%</div>
                     </div>
                 </div>
-                <div class="card span-8" data-aos="fade-left">
+                <div class="card span-8" data-aos="fade-up">
                     <p>В Україні ПДВ виконує критичну функцію: у структурі доходів бюджету він традиційно займає <strong>перше місце (понад 30-40% усіх надходжень)</strong>.</p>
                     <p>Ці кошти є основним ресурсом для фінансування медицини, освіти та нашої стратегічної обороноздатності. ПДВ — основа податкової системи ЄС.</p>
                 </div>
@@ -222,58 +193,27 @@
         <div class="content-box">
             <h2 data-aos="zoom-in">Висновок</h2>
             <div class="card" data-aos="fade-up">
-                <p style="font-size: 1.4rem; opacity: 1;">ПДВ як форма універсального акцизу — це складний механізм контролю та головне джерело <strong>фінансової стійкості держави</strong>. Кожна наша покупка — це ресурс для національної безпеки.</p>
+                <p style="font-size: 1.3rem; opacity: 1;">ПДВ як форма універсального акцизу — це складний механізм контролю та головне джерело <strong>фінансової стійкості держави</strong>. Кожна наша покупка — це ресурс для національної безпеки.</p>
             </div>
-            <div style="margin-top: 50px; font-size: clamp(2rem, 8vw, 4rem); font-weight: 900; color: var(--lime);" data-aos="fade-up">ДЯКУЮ ЗА УВАГУ!</div>
-            <p style="margin-top: 20px; opacity: 0.4; font-weight: 700;">ІГОР ПРАЙС • 2026</p>
+            <div style="margin-top: 40px; font-size: clamp(2rem, 8vw, 4rem); font-weight: 900; color: var(--lime);" data-aos="fade-up">ДЯКУЮ ЗА УВАГУ!</div>
+            <p style="margin-top: 15px; opacity: 0.5; font-weight: 700;">ІГОР ПРАЙС • 2026</p>
         </div>
     </section>
 
     <footer>ДЕРЖАВНИЙ ПОДАТКОВИЙ УНІВЕРСИТЕТ</footer>
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js"></script>
     <script>
-        AOS.init({ duration: 1000, once: true });
-        
-        // Вимикаємо Tilt на телефонах для плавності
-        if (window.innerWidth > 1024) {
-            VanillaTilt.init(document.querySelectorAll(".card"), { max: 5, speed: 400, glare: true, "max-glare": 0.1 });
-        }
+        // Ініціалізація анімації тільки один раз для швидкості
+        AOS.init({ duration: 800, once: true });
 
-        const starContainer = document.getElementById('star-container');
-        const colors = ['#ffffff', '#2B59FF', '#DFFF00'];
-        
-        function createStar() {
-            if (document.hidden) return;
-            const star = document.createElement('div');
-            star.className = 'star';
-            const sizeValue = Math.random() * 2 + 2; 
-            const color = colors[Math.floor(Math.random() * colors.length)];
-            
-            star.style.width = sizeValue + 'px';
-            star.style.height = sizeValue + 'px';
-            star.style.left = Math.random() * 100 + 'vw';
-            star.style.top = '-5vh';
-            star.style.backgroundColor = color;
-            star.style.setProperty('--c', color);
-            
-            const duration = Math.random() * 2 + 3;
-            star.style.setProperty('--d', duration + 's');
-            
-            starContainer.appendChild(star);
-            setTimeout(() => star.remove(), duration * 1000);
-        }
-        
-        // Оптимізована швидкість створення зірок (100мс)
-        setInterval(createStar, 100);
-
+        // Скрол-детектор для меню
         window.addEventListener("scroll", () => {
             let current = "";
             document.querySelectorAll("section").forEach(s => {
-                if (window.pageYOffset >= s.offsetTop - 350) current = s.getAttribute("id");
+                if (window.pageYOffset >= s.offsetTop - 300) current = s.getAttribute("id");
             });
-            document.querySelectorAll(".nav-link").forEach(l => {
+            document.querySelectorAll("nav a").forEach(l => {
                 l.classList.remove("active");
                 if (l.getAttribute("href").includes(current)) l.classList.add("active");
             });
