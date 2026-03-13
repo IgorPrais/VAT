@@ -29,7 +29,7 @@
         }
         @keyframes grid-move { from { transform: rotateX(45deg) translateY(0); } to { transform: rotateX(45deg) translateY(80px); } }
 
-        /* Падаючі зірки (ОНОВЛЕНО: Більше та яскравіше) */
+        /* Падаючі зірки */
         .particles { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; }
         .star {
             position: absolute; border-radius: 50%;
@@ -50,21 +50,23 @@
             background: rgba(10, 10, 10, 0.8); border: 1px solid var(--border);
             backdrop-filter: blur(15px); padding: 8px 12px; border-radius: 100px;
             z-index: 1000; display: flex; gap: 5px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            width: max-content; max-width: 90vw; overflow-x: auto;
         }
+        nav::-webkit-scrollbar { display: none; }
         nav a { 
-            color: #fff; text-decoration: none; font-size: 11px; font-weight: 800; 
-            text-transform: uppercase; padding: 10px 20px; border-radius: 100px;
-            transition: 0.3s; opacity: 0.5; letter-spacing: 1px;
+            color: #fff; text-decoration: none; font-size: 10px; font-weight: 800; 
+            text-transform: uppercase; padding: 10px 15px; border-radius: 100px;
+            transition: 0.3s; opacity: 0.5; letter-spacing: 1px; white-space: nowrap;
         }
         nav a.active { 
             background: var(--blue); opacity: 1; color: #fff; 
             box-shadow: 0 0 15px rgba(43, 89, 255, 0.4);
         }
 
-        section { min-height: 100vh; padding: 140px 10% 80px; display: flex; align-items: center; justify-content: center; position: relative; z-index: 2; }
+        section { min-height: 100vh; padding: 140px 5% 80px; display: flex; align-items: center; justify-content: center; position: relative; z-index: 2; }
         .content-box { width: 100%; max-width: 1100px; margin: 0 auto; }
 
-        h1 { font-size: clamp(2.5rem, 7vw, 5.5rem); font-weight: 900; line-height: 0.9; text-transform: uppercase; margin-bottom: 30px; text-align: left; color: #fff; }
+        h1 { font-size: clamp(2.2rem, 7vw, 5.5rem); font-weight: 900; line-height: 0.9; text-transform: uppercase; margin-bottom: 30px; text-align: left; color: #fff; }
         
         .accent-row {
             background: linear-gradient(90deg, var(--blue), #8099ff, var(--blue));
@@ -77,15 +79,15 @@
 
         .tagline {
             color: #fff; font-weight: 700; letter-spacing: 5px; display: block; 
-            text-align: left; margin-bottom: 10px; opacity: 0.5; font-size: 14px;
+            text-align: left; margin-bottom: 10px; opacity: 0.5; font-size: clamp(10px, 2vw, 14px);
         }
 
-        h2 { font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 900; margin-bottom: 40px; text-transform: uppercase; color: var(--lime); display: inline-block; }
+        h2 { font-size: clamp(1.8rem, 5vw, 3.5rem); font-weight: 900; margin-bottom: 40px; text-transform: uppercase; color: var(--lime); display: inline-block; }
 
         .bento { display: grid; grid-template-columns: repeat(12, 1fr); gap: 20px; }
         .card {
             grid-column: span 12; background: var(--glass); border: 1px solid var(--border);
-            padding: 40px; border-radius: 35px; backdrop-filter: blur(12px);
+            padding: clamp(20px, 5vw, 40px); border-radius: 35px; backdrop-filter: blur(12px);
             transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             width: 100%; text-align: left; position: relative; overflow: hidden;
         }
@@ -104,7 +106,7 @@
         .start-btn:hover { transform: scale(1.05); box-shadow: 0 0 30px rgba(223, 255, 0, 0.3); }
 
         .percent-loader {
-            width: 180px; height: 180px; position: relative;
+            width: clamp(140px, 20vw, 180px); height: clamp(140px, 20vw, 180px); position: relative;
             display: flex; align-items: center; justify-content: center; margin: 0 auto;
         }
         .circle-svg { width: 100%; height: 100%; transform: rotate(-90deg); }
@@ -116,15 +118,22 @@
             filter: drop-shadow(0 0 5px rgba(223, 255, 0, 0.2));
         }
         @keyframes progress-load { to { stroke-dashoffset: 339; } }
-        .percent-text { position: absolute; font-size: 3rem; font-weight: 900; color: #fff; }
+        .percent-text { position: absolute; font-size: clamp(2rem, 5vw, 3rem); font-weight: 900; color: #fff; }
 
-        p { font-size: 1.15rem; line-height: 1.7; opacity: 0.8; margin-bottom: 10px; }
+        p { font-size: clamp(1rem, 2vw, 1.15rem); line-height: 1.7; opacity: 0.8; margin-bottom: 10px; }
         strong { color: var(--lime); }
-        .intro-p { font-size: 1.4rem; border-left: 4px solid var(--blue); padding-left: 25px; text-align: left; max-width: 950px; }
+        .intro-p { font-size: clamp(1.1rem, 3vw, 1.4rem); border-left: 4px solid var(--blue); padding-left: 25px; text-align: left; max-width: 950px; }
 
-        footer { padding: 40px; opacity: 0.3; font-size: 11px; letter-spacing: 3px; text-transform: uppercase; }
+        footer { padding: 40px; opacity: 0.3; font-size: 9px; letter-spacing: 3px; text-transform: uppercase; }
 
-        @media (max-width: 1024px) { .span-8, .span-4, .span-6 { grid-column: span 12; } }
+        /* Mobile Adaptation */
+        @media (max-width: 1024px) { 
+            .span-8, .span-4, .span-6 { grid-column: span 12; } 
+            h1 { text-align: center; }
+            .tagline { text-align: center; }
+            .intro-p { border-left: none; border-top: 2px solid var(--blue); padding: 20px 0; text-align: center; }
+            .start-btn { width: 100%; justify-content: center; }
+        }
     </style>
 </head>
 <body>
@@ -135,8 +144,8 @@
     <nav>
         <a href="#hero" class="nav-link active">Вступ</a>
         <a href="#definition" class="nav-link">Що таке ПДВ?</a>
-        <a href="#effect" class="nav-link">Ефект «доданої вартості»</a>
-        <a href="#fiscal" class="nav-link">Фіскальне значення</a>
+        <a href="#effect" class="nav-link">Ефект</a>
+        <a href="#fiscal" class="nav-link">Фіскальність</a>
         <a href="#conclusion" class="nav-link">Висновок</a>
     </nav>
 
@@ -196,7 +205,7 @@
                     <div class="percent-loader">
                         <svg class="circle-svg">
                             <circle class="circle-bg" cx="90" cy="90" r="80"></circle>
-                            <circle class="circle-progress" cx="90" cy="90" r="80"></circle>
+                            <circle class="circle-progress" cx="90" cy="90" r="80" style="stroke-dashoffset: 339;"></circle>
                         </svg>
                         <div class="percent-text">40%</div>
                     </div>
@@ -215,7 +224,7 @@
             <div class="card" data-aos="fade-up">
                 <p style="font-size: 1.4rem; opacity: 1;">ПДВ як форма універсального акцизу — це складний механізм контролю та головне джерело <strong>фінансової стійкості держави</strong>. Кожна наша покупка — це ресурс для національної безпеки.</p>
             </div>
-            <div style="margin-top: 50px; font-size: clamp(2.5rem, 8vw, 4rem); font-weight: 900; color: var(--lime);" data-aos="fade-up">ДЯКУЮ ЗА УВАГУ!</div>
+            <div style="margin-top: 50px; font-size: clamp(2rem, 8vw, 4rem); font-weight: 900; color: var(--lime);" data-aos="fade-up">ДЯКУЮ ЗА УВАГУ!</div>
             <p style="margin-top: 20px; opacity: 0.4; font-weight: 700;">ІГОР ПРАЙС • 2026</p>
         </div>
     </section>
@@ -225,42 +234,44 @@
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js"></script>
     <script>
-        AOS.init({ duration: 1000, once: false });
-        VanillaTilt.init(document.querySelectorAll(".card"), { max: 5, speed: 400, glare: true, "max-glare": 0.1 });
+        AOS.init({ duration: 1000, once: true });
+        
+        // Вимикаємо Tilt на телефонах для плавності
+        if (window.innerWidth > 1024) {
+            VanillaTilt.init(document.querySelectorAll(".card"), { max: 5, speed: 400, glare: true, "max-glare": 0.1 });
+        }
 
         const starContainer = document.getElementById('star-container');
         const colors = ['#ffffff', '#2B59FF', '#DFFF00'];
         
         function createStar() {
+            if (document.hidden) return;
             const star = document.createElement('div');
             star.className = 'star';
-            
-            // ОНОВЛЕНО: Більший розмір зірок (від 3px до 6px)
-            const sizeValue = Math.random() * 3 + 3; 
-            const size = sizeValue + 'px';
-            
+            const sizeValue = Math.random() * 2 + 2; 
             const color = colors[Math.floor(Math.random() * colors.length)];
-            star.style.width = size;
-            star.style.height = size;
+            
+            star.style.width = sizeValue + 'px';
+            star.style.height = sizeValue + 'px';
             star.style.left = Math.random() * 100 + 'vw';
             star.style.top = '-5vh';
             star.style.backgroundColor = color;
             star.style.setProperty('--c', color);
             
-            const duration = Math.random() * 2 + 2; // Швидкість падіння
+            const duration = Math.random() * 2 + 3;
             star.style.setProperty('--d', duration + 's');
             
             starContainer.appendChild(star);
             setTimeout(() => star.remove(), duration * 1000);
         }
         
-        // ОНОВЛЕНО: Частіша генерація (кожні 40мс замість 80мс) для великої кількості
-        setInterval(createStar, 40);
+        // Оптимізована швидкість створення зірок (100мс)
+        setInterval(createStar, 100);
 
         window.addEventListener("scroll", () => {
             let current = "";
             document.querySelectorAll("section").forEach(s => {
-                if (pageYOffset >= s.offsetTop - 300) current = s.getAttribute("id");
+                if (window.pageYOffset >= s.offsetTop - 350) current = s.getAttribute("id");
             });
             document.querySelectorAll(".nav-link").forEach(l => {
                 l.classList.remove("active");
